@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "161859047952",
+    "project_id": "flaffy-dev",
+    "storage_bucket": "flaffy-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161859047952:android:f943afd5cc6d4dfd8cb095",
+        "android_client_info": {
+          "package_name": "fluffy.net.fluffy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwDp8tPDAXzEnzuT2aHl8jJ7IQ3LPQJ_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
