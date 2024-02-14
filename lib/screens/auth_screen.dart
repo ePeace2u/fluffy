@@ -318,6 +318,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   style: TextStyle(
                                       fontSize: 20,
                                       decoration: TextDecoration.underline,
+                                      decorationColor: Colors.cyan,
                                       color: Colors.cyan)),
                               onTap: () {
                                 setState(() {

@@ -13,6 +13,18 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   TextEditingController _emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool enabled = false;
+
+  _setDisabled() {
+    if (_emailController.text.isNotEmpty) {
+        setState(() {
+          enabled = true;
+        });
+    }
+    else{
+      setState(() {enabled = false;});
+    }
+  }
 
   @override
   void dispose() {
@@ -66,33 +78,81 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Сброс пароля'),
+        centerTitle: true,
+        backgroundColor: Colors.cyan,
+        title: const Text('Fluffy.ToDo',style: TextStyle(
+            color: Colors.black, fontFamily: 'Satisfy', fontSize: 28)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                controller: _emailController,
-                validator: (email) =>
-                email != null && !EmailValidator.validate(email)
-                    ? 'Введите правильный Email'
-                    : null,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Введите Email',
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 60,
                 ),
-              ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: resetPassword,
-                child: const Center(child: Text('Сбросить пароль')),
-              ),
-            ],
+                TextFormField(
+                  onChanged: (text) {
+                    _setDisabled();
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                  controller: _emailController,
+                  validator: (email) =>
+                  email != null && !EmailValidator.validate(email)
+                      ? 'Введите правильный Email'
+                      : null,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                  decoration: InputDecoration(
+                      labelText: "EMAIL",
+                      labelStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.black54),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.cyan, width: 3.2)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                          const BorderSide(color: Colors.cyan, width: 3.2),
+                          borderRadius: BorderRadius.circular(30)),
+                      prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: IconTheme(
+                            data: const IconThemeData(color: Colors.black),
+                            child: Icon(Icons.mail),
+                          ))),
+                ),
+                const SizedBox(height: 30),
+                IgnorePointer(
+                    ignoring: !enabled,
+                    child: Opacity(
+                      opacity: !enabled ? 0.5 : 1.0,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                          overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                                  (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.pressed)) {
+                                  return Colors.white;
+                                }
+                                return null; // Defer to the widget's default.
+                              }),
+                        ),
+                        child: Text("Reset password",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                                color: Colors.black)),
+                        onPressed: () {enabled ? resetPassword() : null;
+                        },
+                      ),
+                    )
+                )
+              ],
+            ),
           ),
         ),
       ),

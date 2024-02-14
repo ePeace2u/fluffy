@@ -76,30 +76,48 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       ? HomeScreen()
       : Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            title: const Text('Верификация Email адреса'),
-          ),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Письмо с подтверждением было отправлено на вашу электронную почту.',
-                    style: TextStyle(
-                      fontSize: 20,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 150, left: 50),
+                    child: const Text(
+                      'Email Verification',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 25),
+                    child: const Text(
+                      'Mail was sent on your email adress.',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                      overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return Colors.white;
+                            }
+                            return null; // Defer to the widget's default.
+                          }),
+                    ),
                     onPressed: () {
                       canResendEmail ? sendVerificationEmail() : null;
-                    },
-                    icon: const Icon(Icons.email),
-                    label: const Text('Повторно отправить'),
+                     },
+                    icon: const Icon(Icons.email, color: Colors.black54,),
+                    label: const Text('Resend', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w500, fontSize: 17),),
                   ),
-                  const SizedBox(height: 20),
                   TextButton(
                     onPressed: () async {
                       final navigator = Navigator.of(context);
@@ -113,7 +131,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                     child: const Text(
                       'Отменить',
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.cyan,
                       ),
                     ),
                   )
